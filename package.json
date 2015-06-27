@@ -1,13 +1,23 @@
 {
-	"name": "NodejsStarterApp",
-	"version": "0.0.1",
-	"description": "A sample nodejs app for Bluemix",
-	"scripts": {
-		"start": "node app.js"
-	},
-	"dependencies": {
-		"express": "4.12.x",
-		"cfenv": "1.0.x"
-	},
-	"repository": {}
+  "name": "am9",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.12.4",
+    "cookie-parser": "~1.3.5",
+    "debug": "~2.2.0",
+    "dotenv": "^1.2.0",
+    "express": "~4.12.4",
+    "jade": "~1.9.2",
+    "jwt-simple": "^0.3.0",
+    "moment": "^2.10.3",
+    "morgan": "~1.5.3",
+    "mysql": "^2.7.0",
+    "request": "^2.58.0",
+    "sequelize": "^3.2.0",
+    "serve-favicon": "~2.2.1"
+  }
 }

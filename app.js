@@ -1,29 +1,76 @@
-/*jshint node:true*/
+var express = require('express')
+var path = require('path')
+var logger = require('morgan')
+var cookieParser = require('cookie-parser')
+var bodyParser = require('body-parser')
 
-//------------------------------------------------------------------------------
-// node.js starter application for Bluemix
-//------------------------------------------------------------------------------
+var app = express()
 
-// This application uses express as it's web server
-// for more info, see: http://expressjs.com
-var express = require('express');
+// uncomment after placing your favicon in /public
+// app.use(favicon(__dirname + '/public/favicon.ico'))
+app.use(logger('dev'))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(cookieParser())
 
-// cfenv provides access to your Cloud Foundry environment
-// for more info, see: https://www.npmjs.com/package/cfenv
-var cfenv = require('cfenv');
+app.use(function (req, res, next) {
+  res.header({
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+    'Access-Control-Allow-Methods': 'PUT, DELETE, GET, POST, HEAD, OPTIONS'
+  })
+  next()
+})
 
-// create a new express server
-var app = express();
+app.use(express.static(path.join(__dirname, '/public')))
+app.options('*', function (req, res) {
+  res.send('OK')
+})
 
-// serve the files out of ./public as our main files
-app.use(express.static(__dirname + '/public'));
+var auth = require('./routes/auth')
+app.use('/auth', auth)
 
-// get the app environment from Cloud Foundry
-var appEnv = cfenv.getAppEnv();
+var user = require('./routes/user')
+app.use('/user', user)
 
-// start server on the specified port and binding host
-app.listen(appEnv.port, appEnv.bind, function() {
+var things = require('./routes/things')
+app.use('/things', things)
 
-	// print a message when the server starts listening
-  console.log("server starting on " + appEnv.url);
-});
+var parties = require('./routes/parties')
+app.use('/parties', parties)
+
+var resources = require('./routes/resources')
+app.use('/resources', resources)
+
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+  var err = new Error('Not Found')
+  err.status = 404
+  next(err)
+})
+
+// error handlers
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+  app.use(function (err, req, res, next) {
+    res.status(err.status || 500)
+    res.render('error', {
+      message: err.message,
+      error: err
+    })
+  })
+}
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function (err, req, res, next) {
+  res.status(err.status || 500)
+  res.render('error', {
+    message: err.message,
+    error: {}
+  })
+})
+
+module.exports = app
