@@ -86,7 +86,7 @@ router.delete('/:id', jwtAuth, function (req, res) {
     .then(function (thing) {
       if (thing == null) return res.status(404).send({message: 'Not Found'})
       thing.destroy().then(function () {
-        return res.json({code:200, message:'YOLO'})
+        return res.json({code: 200, message: 'YOLO'})
       })
     })
 })
