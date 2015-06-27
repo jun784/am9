@@ -1,0 +1,13 @@
+applications:
+- services:
+  - Question and Answer-u3
+  - Tradeoff Analytics-ce
+  - Personality Insights-bv
+  - Concept Expansion-nj
+  disk_quota: 1024M
+  host: am9
+  name: am9
+  path: .
+  domain: mybluemix.net
+  instances: 1
+  memory: 256M
