@@ -17,6 +17,7 @@ router.get('/', jwtAuth, function (req, res) {
 router.get('/:id', jwtAuth, function (req, res) {
   Thing.findById(req.params.id, {include: [Tag]})
     .then(function (thing) {
+      if (thing == null) return res.status(404).send({message: 'Not Found'})
       res.json(thing)
     })
 })
