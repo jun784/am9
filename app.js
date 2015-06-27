@@ -36,6 +36,12 @@ app.use('/user', user)
 var things = require('./routes/things')
 app.use('/things', things)
 
+var parties = require('./routes/parties')
+app.use('/parties', parties)
+
+var resources = require('./routes/resources')
+app.use('/resources', resources)
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   var err = new Error('Not Found')
