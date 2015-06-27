@@ -86,29 +86,29 @@ router.post('/facebook', function (req, res) {
       }
       console.log('profile', profile)
       if (req.headers.authorization) {
-        Account.findOne({where: { facebook: profile.id }})
-        .then( function (existingUser) {
-          if (existingUser) {
-            return res.status(409).send({ message: 'There is already a Facebook account that belongs to you' })
-          }
-          var token = req.headers.authorization.split(' ')[1]
-          var payload = jwt.decode(token, process.env.TOKEN_SECRET)
-          Account.findById(payload.sub)
-            .then(function (account) {
-              if (!account) {
-                return res.status(400).send({ message: 'Account not found' })
-              }
-              account.fbId = profile.id
-              account.username = account.username || profile.name
-              account.save(function () {
-                var token = createJWT(account)
-                res.send({ token: token })
+        Account.findOne({where: { fbId: profile.id }})
+          .then(function (existingUser) {
+            if (existingUser) {
+              return res.status(409).send({ message: 'There is already a Facebook account that belongs to you' })
+            }
+            var token = req.headers.authorization.split(' ')[1]
+            var payload = jwt.decode(token, process.env.TOKEN_SECRET)
+            Account.findById(payload.sub)
+              .then(function (account) {
+                if (!account) {
+                  return res.status(400).send({ message: 'Account not found' })
+                }
+                account.fbId = profile.id
+                account.username = account.username || profile.name
+                account.save(function () {
+                  var token = createJWT(account)
+                  res.send({ token: token })
+                })
               })
-            })
-        })
+          })
       } else {
         // Step 3b. Create a new user account or return an existing one.
-        Account.findOne({ where: {fbId: profile.id} }).then(function  (err, existingUser) {
+        Account.findOne({ where: {fbId: profile.id} }).then(function (existingUser) {
           if (existingUser) {
             var token = createJWT(existingUser)
             return res.send({ token: token })
