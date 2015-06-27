@@ -30,6 +30,12 @@ app.options('*', function (req, res) {
 var auth = require('./routes/auth')
 app.use('/auth', auth)
 
+var user = require('./routes/user')
+app.use('/user', user)
+
+var things = require('./routes/things')
+app.use('/things', things)
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   var err = new Error('Not Found')
