@@ -4,6 +4,7 @@ var router = express.Router()
 var models = require('../models')
 var Party = models.Party
 var Account = models.Account
+var Resource = models.Resource
 
 var jwtAuth = require('../middlewares/jwt-auth')
 
@@ -24,9 +25,20 @@ router.post('/', jwtAuth, function (req, res) {
         .then(function (account) {
           return party.setAccounts([account])
             .then(function () {
-              var plainParty = party.get()
-              plainParty.Accounts = [account]
-              res.json(plainParty)
+              return Resource.findOne({where: {fbId: account.fbId}})
+                .then(function (resource) {
+                  if (resource == null) return Resource.create({name: account.username, fbId: account.fbId})
+                  return resource
+                })
+                .then(function (resource) {
+                  return party.setResource([resource])
+                  .then(function () {
+                    var plainParty = party.get()
+                    plainParty.Accounts = [account]
+                    plainParty.Resources = [resource]
+                    res.json(plainParty)
+                  })
+                })
             })
         })
     })

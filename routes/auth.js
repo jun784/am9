@@ -120,8 +120,13 @@ router.post('/facebook', function (req, res) {
             fbId: profile.id,
             fbToken: accessToken.access_token
           })
-            .then(function (user) {
-              res.json({token: createJWT(user)})
+            .then(function (account) {
+              Resource.create({
+                name: account.username,
+                fbId: profile.id
+              }).then(function () {
+                res.json({token: createJWT(account)})
+              })
             })
             .catch(function (err) {
               if (err.name === 'SequelizeUniqueConstraintError') {
