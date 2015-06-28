@@ -94,7 +94,7 @@ router.post('/:id/accounts', jwtAuth, function (req, res) {
 })
 
 router.delete('/:id/accounts', jwtAuth, function (req, res) {
-  Party.findById(req.params.id, {include: [Account]})
+  Party.findById(req.params.id)
     .then(function (party) {
       return new Promise(function (resolve, reject) {
         Account.findById(req.body.id)
@@ -112,6 +112,45 @@ router.delete('/:id/accounts', jwtAuth, function (req, res) {
           var accounts = party.Accounts
           res.json(accounts)
         })
+    })
+})
+
+router.get('/:id/resources', function (req, res) {
+  Party.findById(req.params.id, {include: [Resource]})
+    .then(function (party) {
+      res.json(party.Resources)
+    })
+})
+
+router.post('/:id/resources', function (req, res) {
+  Party.findById(req.params.id, {include: [Resource]})
+    .then(function (party) {
+      return Resource.findById(req.body.id)
+        .then(function (resource) {
+          return party.addResource(resource)
+        })
+        .then(function () {
+          return party.reload({include: [Resource]})
+        })
+    })
+    .then(function (party) {
+      res.json(party.Resources)
+    })
+})
+
+router.delete('/:id/resources', function (req, res) {
+  Party.findById(req.params.id, {include: [Resource]})
+    .then(function (party) {
+      return Resource.findById(req.body.id)
+        .then(function (resource) {
+          return party.removeResource(resource)
+        })
+        .then(function () {
+          return party.reload({include: [Resource]})
+        })
+    })
+    .then(function (party) {
+      res.json(party.Resources)
     })
 })
 
