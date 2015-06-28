@@ -165,18 +165,19 @@ router.get('/:id/doings', function (req, res) {
 router.post('/:id/doings', function (req, res) {
   Party.findById(req.params.id)
     .then(function (party) {
-        return Doing.create({
-          PartyId: party.id,
-          ThingId: req.body.thingId,
-          ResourceId: req.body.resourceId,
-          startedAt: req.body.startedAt,
-          endedAt: req.body.endedAt
-        })
-      }).then(function (doing) {
-        return party.reload({include: [Doing]})
-      }).then(function (party) {
-        res.json(party.Doings)
+      return Doing.create({
+        PartyId: party.id,
+        ThingId: req.body.thingId,
+        ResourceId: req.body.resourceId,
+        startedAt: req.body.startedAt,
+        endedAt: req.body.endedAt
       })
+      .then(function (doing) {
+        return party.reload({include: [Doing]})
+      })
+    })
+    .then(function (party) {
+      res.json(party.get().Doings)
     })
 })
 
