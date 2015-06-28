@@ -100,6 +100,7 @@ router.post('/facebook', function (req, res) {
                 }
                 account.fbId = profile.id
                 account.username = account.username || profile.name
+                account.fbToken = accessToken.access_token
                 account.save(function () {
                   var token = createJWT(account)
                   res.send({ token: token })
@@ -116,7 +117,8 @@ router.post('/facebook', function (req, res) {
           Account.create({
             username: profile.first_name + profile.last_name,
             email: profile.email,
-            fbId: profile.id
+            fbId: profile.id,
+            fbToken: accessToken.access_token
           })
             .then(function (user) {
               res.json({token: createJWT(user)})

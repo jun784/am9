@@ -20,7 +20,7 @@ router.post('/', jwtAuth, function (req, res) {
       name: req.body.name
     })
     .then(function (party) {
-      return Account.findById(req.body.id)
+      return Account.findById(req.user)
         .then(function (account) {
           return party.setAccounts([account])
             .then(function () {
@@ -49,7 +49,7 @@ router.put('/:id', jwtAuth, function (req, res) {
     })
 })
 
-router.post('/:id/invite', jwtAuth, function (req, res) {
+router.post('/:id/accounts', jwtAuth, function (req, res) {
   Party.findById(req.params.id, {include: [Account]})
     .then(function (party) {
       return new Promise(function (resolve, reject) {
@@ -64,6 +64,27 @@ router.post('/:id/invite', jwtAuth, function (req, res) {
     })
     .then(function (party) {
       return res.json({code: 200, message: 'YOLO'})
+    })
+})
+
+router.delete('/:id/accounts', jwtAuth, function (req, res) {
+  Party.findById(req.params.id, {include: [Account]})
+    .then(function (party) {
+      return new Promise(function (resolve, reject) {
+        Account.findById(req.body.id)
+          .then(function (account) {
+            party.removeAccount(account)
+              .then(function () {
+                resolve(party)
+              })
+          })
+      })
+    })
+    .then(function (party) {
+      party.reload({include: [Account]})
+        .then(function () {
+          return res.json({code: 200, message: 'YOLO'})
+        })
     })
 })
 
