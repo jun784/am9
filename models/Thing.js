@@ -7,7 +7,7 @@ module.exports = function (sequelize, DataTypes) {
     classMethods: {
       associate: function (models) {
         Thing.belongsToMany(models.Tag, {through: 'ThingTag'})
-        Thing.hasMany(models.Do)
+        Thing.hasMany(models.Doing)
       }
     }
   })

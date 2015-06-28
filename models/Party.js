@@ -7,6 +7,7 @@ module.exports = function (sequelize, DataTypes) {
     classMethods: {
       associate: function (models) {
         Party.belongsToMany(models.Account, {through: 'PartyAccount'})
+        Party.hasMany(models.Doing)
 
       }
     }

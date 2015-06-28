@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  var Do = sequelize.define('Do', {
+  var Doing = sequelize.define('Doing', {
     startedAt: {
       type: DataTypes.DATE
     },
@@ -9,10 +9,10 @@ module.exports = function (sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function (models) {
-        Do.belongsToMany(models.Resource, {through: 'ResourceDo'})
+        Doing.belongsToMany(models.Resource, {through: 'ResourceDoing'})
       }
     }
   })
 
-  return Do
+  return Doing
 }
