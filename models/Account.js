@@ -26,8 +26,7 @@ module.exports = function (sequelize, DataTypes) {
       toJSON: function () {
         var ret = Instance.prototype.toJSON.call(this)
 
-        delete ret.password
-        delete ret.fb_token
+        delete ret.fbToken
         return ret
       }
     },

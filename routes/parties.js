@@ -31,13 +31,13 @@ router.post('/', jwtAuth, function (req, res) {
                   return resource
                 })
                 .then(function (resource) {
-                  return party.setResource([resource])
-                  .then(function () {
-                    var plainParty = party.get()
-                    plainParty.Accounts = [account]
-                    plainParty.Resources = [resource]
-                    res.json(plainParty)
-                  })
+                  return party.addResource(resource)
+                    .then(function () {
+                      var plainParty = party.get()
+                      plainParty.Accounts = [account]
+                      plainParty.Resources = [resource]
+                      res.json(plainParty)
+                    })
                 })
             })
         })

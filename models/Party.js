@@ -8,6 +8,7 @@ module.exports = function (sequelize, DataTypes) {
       associate: function (models) {
         Party.belongsToMany(models.Account, {through: 'PartyAccount'})
         Party.hasMany(models.Doing)
+        Party.belongsToMany(models.Resource, {through: 'PartyResource'})
 
       }
     }
