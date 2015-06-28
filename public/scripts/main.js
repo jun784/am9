@@ -373,6 +373,12 @@
 	      console.log(res);
 	      localStorage.setItem('token', res.token);
 	      $.ajax({
+					beforeSend: function(xhr) {
+				    if (localStorage.getItem('token')) {
+				      xhr.setRequestHeader('Authorization',
+				            'Bearer ' + localStorage.getItem('token'));
+				    }
+				  },
 	        url: '/user',
 	        method: 'GET',
 	        success: function success(data) {
