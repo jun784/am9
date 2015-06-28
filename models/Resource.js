@@ -10,7 +10,7 @@ module.exports = function (sequelize, DataTypes) {
     classMethods: {
       associate: function (models) {
         Resource.belongsToMany(models.Party, {through: 'PartyResource'})
-        Resource.belongsToMany(models.Doing, {through: 'ResourceDoing'})
+        Resource.hasMany(models.Doing)
       }
     }
   })
