@@ -29,7 +29,7 @@ if (code) {
 
 var auth = {}
 auth.login = function () {
-  window.location = 'https://www.facebook.com/dialog/oauth?%20client_id=966482230069701%20&redirect_uri=http://localhost:3000/'
+  window.location = 'https://www.facebook.com/dialog/oauth?%20client_id=966482230069701%20&redirect_uri=' + (window.location.origin || window.location.protocol + '//' + window.location.host) + '/'
 }
 auth.check = function () {
   return !!localStorage.getItem('token')
