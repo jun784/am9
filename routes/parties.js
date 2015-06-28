@@ -62,12 +62,22 @@ router.put('/:id', jwtAuth, function (req, res) {
 })
 
 router.post('/:id/accounts', jwtAuth, function (req, res) {
-  Party.findById(req.params.id, {include: [Account]})
+  Party.findById(req.params.id)
     .then(function (party) {
       return new Promise(function (resolve, reject) {
         Account.findById(req.body.id)
           .then(function (account) {
             party.addAccount(account)
+              .then(function () {
+                return Resource.findOne({where: {fbId: account.fbId}})
+              })
+              .then(function (resource) {
+                if (resource == null) Resource.create({name: account.username, fbId: account.fbId})
+                return resource
+              })
+              .then(function (resource) {
+                return party.addResource(resource)
+              })
               .then(function () {
                 resolve(party)
               })
@@ -75,7 +85,11 @@ router.post('/:id/accounts', jwtAuth, function (req, res) {
       })
     })
     .then(function (party) {
-      return res.json({code: 200, message: 'YOLO'})
+      return party.reload({include: [Account]})
+        .then(function (party) {
+          var accounts = party.Accounts
+          res.json(accounts)
+        })
     })
 })
 
@@ -95,7 +109,8 @@ router.delete('/:id/accounts', jwtAuth, function (req, res) {
     .then(function (party) {
       party.reload({include: [Account]})
         .then(function () {
-          return res.json({code: 200, message: 'YOLO'})
+          var accounts = party.Accounts
+          res.json(accounts)
         })
     })
 })
