@@ -172,9 +172,9 @@ router.post('/:id/doings', function (req, res) {
         startedAt: req.body.startedAt,
         endedAt: req.body.endedAt
       })
-      .then(function (doing) {
-        return party.reload({include: [Doing]})
-      })
+        .then(function (doing) {
+          return party.reload({include: [Doing]})
+        })
     })
     .then(function (party) {
       res.json(party.get().Doings)

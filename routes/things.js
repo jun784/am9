@@ -38,11 +38,11 @@ router.post('/', jwtAuth, function (req, res) {
                 resolve()
               })
           })
-          .then(function () {
-            var plainThing = thing.get()
-            plainThing.Tags = tags
-            res.json(plainThing)
-          })
+            .then(function () {
+              var plainThing = thing.get()
+              plainThing.Tags = tags
+              res.json(plainThing)
+            })
         })
     })
     .catch(function (err) {
@@ -69,11 +69,11 @@ router.put('/:id', jwtAuth, function (req, res) {
                 resolve()
               })
           })
-          .then(function () {
-            var plainThing = thing.get()
-            plainThing.Tags = tags
-            res.json(plainThing)
-          })
+            .then(function () {
+              var plainThing = thing.get()
+              plainThing.Tags = tags
+              res.json(plainThing)
+            })
         })
     })
     .catch(function (err) {
