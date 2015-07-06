@@ -1,6 +1,6 @@
 'use strict';
 
-import {stores} from '../models/stores';
+import stores from '../models/stores';
 
 new Vue({
   el: '#add',

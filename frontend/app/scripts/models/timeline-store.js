@@ -1,6 +1,6 @@
 'use strict';
 
-import {Store} from './store';
+import Store from './store';
 
 class TimelineStore extends Store {
   constructor() {
@@ -129,4 +129,4 @@ class TimelineStore extends Store {
   }
 }
 
-export {TimelineStore};
+export default TimelineStore;
