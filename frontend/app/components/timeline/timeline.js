@@ -1,10 +1,9 @@
 'use strict';
 
-import stores from '../models/stores';
+require('./timeline.scss');
 
-var timeline = new Vue({
-  el: '#timeline',
-
+module.exports = {
+  template: require('./timeline.html'),
   data: {
     start: (function(now) {
       now.setHours(0);
@@ -21,14 +20,8 @@ var timeline = new Vue({
     resources: null
   },
 
-  created: function() {
-    stores.timeline.on('fetch', (data) => {
-      this.refresh(data);
-    });
-
-    stores.timeline.on('updateCurrentTime', (current) => {
-      this.currentTime = current.getTime();
-    });
+  components: {
+    resource: require('../resource/resource')
   },
 
   ready: function() {
@@ -58,10 +51,10 @@ var timeline = new Vue({
       if (timeline.resources) {
         this.resources = timeline.resources;
       }
+    },
+
+    updateCurrentTime: function(current) {
+      this.currentTime = current;
     }
   }
-});
-
-timeline.refresh(stores.timeline.data);
-
-export {timeline};
+};

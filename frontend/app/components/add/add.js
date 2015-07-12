@@ -1,10 +1,13 @@
 'use strict';
 
-import stores from '../models/stores';
+require('./add.scss');
 
-new Vue({
-  el: '#add',
-  props: ['resource-id'],
+import stores from '../../scripts/models/stores';
+
+module.exports = {
+  data: {
+    resourceId: 1
+  },
 
   ready: function() {
     var _this = this;
@@ -63,4 +66,4 @@ new Vue({
 
   methods: {
   }
-});
+};

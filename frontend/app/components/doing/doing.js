@@ -1,7 +1,9 @@
 'use strict';
 
-Vue.component('doing', {
-  template: '#doing',
+require('./doing.scss');
+
+module.exports = {
+  template: require('./doing.html'),
   replace: true,
 
   ready: function() {
@@ -82,4 +84,4 @@ Vue.component('doing', {
       return this.$root.currentTime < this.start;
     }
   }
-});
+};

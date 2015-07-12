@@ -3,14 +3,13 @@
 'use strict';
 import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
-import browserSync from 'browser-sync';
+import bs from 'browser-sync';
 import del from 'del';
 import {stream as wiredep} from 'wiredep';
 import webpack from 'webpack-stream';
 import fs from 'fs-extra';
 
 const $ = gulpLoadPlugins();
-const reload = browserSync.reload;
 
 gulp.task('styles', () => {
   return gulp.src('app/styles/**/*.scss')
@@ -24,11 +23,11 @@ gulp.task('styles', () => {
     .pipe($.autoprefixer({browsers: ['last 1 version']}))
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest('.tmp/styles'))
-    .pipe(reload({stream: true}));
+    .pipe(bs.stream());
 });
 
 gulp.task('scripts', () => {
-  return gulp.src(['app/scripts/*/**/*.js', 'app/scripts/main.js'])
+  return gulp.src(['app/components/**/*', 'app/scripts/*/**/*.js', 'app/scripts/main.js'])
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
     .pipe(webpack({
@@ -40,16 +39,15 @@ gulp.task('scripts', () => {
       },
       module: {
         loaders: [
-          {
-            test: /\.js$/,
-            loader: 'babel-loader'
-          }
+          {test: /\.html$/, loader: 'html-loader'},
+          {test: /\.scss$/, loader: 'style!css!sass'},
+          {test: /\.js$/, loader: 'babel-loader'}
         ]
       }
     }))
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest('.tmp/scripts'))
-    .pipe(reload({stream: true}));
+    .pipe(bs.stream());
 });
 
 gulp.task('html', ['inject'], () => {
@@ -104,13 +102,13 @@ gulp.task('inject', ['styles', 'scripts'], () => {
       gulp.src(['.tmp/scripts/main.js', '.tmp/styles/**/*.css'], { read: false }),
       { ignorePath: ['app', '.tmp'], addRootSlash: false }))
     .pipe(gulp.dest('.tmp'))
-    .pipe(reload({stream: true, once: true}));
+    .pipe(bs.stream({once: true}));
 });
 
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
 gulp.task('serve', ['inject', 'fonts'], () => {
-  browserSync({
+  bs({
     notify: false,
     port: 9000,
     server: {
@@ -122,19 +120,18 @@ gulp.task('serve', ['inject', 'fonts'], () => {
   });
 
   gulp.watch([
-    'app/scripts/**/*.js',
     'app/images/**/*',
     '.tmp/fonts/**/*'
-  ]).on('change', reload);
+  ]).on('change', bs.reload);
 
   gulp.watch('app/*.html', ['inject']);
-  gulp.watch(['app/styles/**/*.scss', 'app/scripts/**/*.js'], ['inject']);
+  gulp.watch(['app/styles/**/*.scss', 'app/components/**/*', 'app/scripts/**/*.js'], ['inject']);
   gulp.watch('app/fonts/**/*', ['fonts']);
   gulp.watch('bower.json', ['wiredep', 'fonts']);
 });
 
 gulp.task('serve:dist', () => {
-  browserSync({
+  bs({
     notify: false,
     port: 9000,
     server: {
@@ -144,7 +141,7 @@ gulp.task('serve:dist', () => {
 });
 
 gulp.task('serve:test', () => {
-  browserSync({
+  bs({
     notify: false,
     port: 9000,
     ui: false,
@@ -156,7 +153,7 @@ gulp.task('serve:test', () => {
     }
   });
 
-  gulp.watch('test/spec/**/*.js').on('change', reload);
+  gulp.watch('test/spec/**/*.js').on('change', bs.reload);
   gulp.watch('test/spec/**/*.js', ['lint:test']);
 });
 

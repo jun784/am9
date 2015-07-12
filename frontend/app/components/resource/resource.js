@@ -1,10 +1,16 @@
 'use strict';
 
-import stores from '../models/stores';
+require('./resource.scss');
 
-Vue.component('resource', {
-  template: '#resource',
+import stores from '../../scripts/models/stores';
+
+module.exports = {
+  template: require('./resource.html'),
   replace: true,
+
+  components: {
+    doing: require('../doing/doing')
+  },
 
   created: function() {
     stores.timeline.on('addDoing', (data) => {
@@ -73,4 +79,4 @@ Vue.component('resource', {
       }
     }
   }
-});
+};

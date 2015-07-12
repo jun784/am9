@@ -34,45 +34,8 @@
       </header>
 
       <div class="timeline-wrapper">
-        <article id="timeline" class="timeline">
-          <header id="timeline-header"></header>
-          
-          <div class="timeline-inner">
-            <ul id="timeline-scales">
-              <li class="timeline-scale"><span>0</span></li>
-              <li class="timeline-scale"><span>1</span></li>
-              <li class="timeline-scale"><span>2</span></li>
-              <li class="timeline-scale"><span>3</span></li>
-              <li class="timeline-scale"><span>4</span></li>
-              <li class="timeline-scale"><span>5</span></li>
-              <li class="timeline-scale"><span>6</span></li>
-              <li class="timeline-scale"><span>7</span></li>
-              <li class="timeline-scale"><span>8</span></li>
-              <li class="timeline-scale"><span>9</span></li>
-              <li class="timeline-scale"><span>10</span></li>
-              <li class="timeline-scale"><span>11</span></li>
-              <li class="timeline-scale"><span>12</span></li>
-              <li class="timeline-scale"><span>13</span></li>
-              <li class="timeline-scale"><span>14</span></li>
-              <li class="timeline-scale"><span>15</span></li>
-              <li class="timeline-scale"><span>16</span></li>
-              <li class="timeline-scale"><span>17</span></li>
-              <li class="timeline-scale"><span>18</span></li>
-              <li class="timeline-scale"><span>19</span></li>
-              <li class="timeline-scale"><span>20</span></li>
-              <li class="timeline-scale"><span>21</span></li>
-              <li class="timeline-scale"><span>22</span></li>
-              <li class="timeline-scale"><span>23</span></li>
-            </ul>
-
-            <div>
-              <resource v-repeat="resources"></resource>
-            </div>
-
-            <div class="timeline-current" v-style="{ top: currentTop + 'px' }"></div>
-          </div>
-        </article>
-        <div id="add" resource-id="1">
+        <div id="timeline" v-ref="timeline"></div>
+        <div id="add">
           <div id="add-frame">
             <div id="up-icon"></div>
           </div>
@@ -81,26 +44,6 @@
         </div>
       </div>
     </div>
-
-    <script type="text/template" id="resource">
-      <article class="resource">
-        <div class="timeline-user"></div>
-        <div class="doing-wrapper" v-style="{ height: $parent.height + 'px' }">
-          <ol class="doing-list">
-            <doing v-ref="doing" v-repeat="doings"></doing>
-          </ol>
-        </div>
-      </article>
-    </script>
-
-    <script type="text/template" id="doing">
-      <li class="doing-item" tabindex="1" v-class="{ done: isDone, doing: isDoing }" v-style="{ height: height + 'px', top: top + 'px' }">
-        <div class="doing-item-inner">
-          <div class="doing-background" v-show="isDoing" v-style="{ height: backgroundHeight + 'px' }"></div>
-          <p class="doing-body" v-text="body"></p>
-        </div>
-      </li>
-    </script>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
