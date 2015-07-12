@@ -40,7 +40,7 @@ gulp.task('scripts', () => {
       module: {
         loaders: [
           {test: /\.html$/, loader: 'html-loader'},
-          {test: /\.scss$/, loader: 'style!css!sass'},
+          {test: /\.scss$/, loader: 'style!css!sass?sourceMap'},
           {test: /\.js$/, loader: 'babel-loader'}
         ]
       }
