@@ -6,11 +6,17 @@ var timeline = new Vue({
   el: '#timeline',
 
   data: {
-    start: new Date(2015, 5, 28).getTime(),
+    start: (function(now) {
+      now.setHours(0);
+      now.setMinutes(0);
+      now.setSeconds(0);
+      now.setMilliseconds(0);
+      return now.getTime();
+    })(new Date()),
     time: 1000 * 60 * 60 * 24,
     step: 1000 * 60 * 15,
     stepLength: 30,
-    currentTime: new Date().getTime(),
+    currentTime: Date.now(),
 
     resources: null
   },
