@@ -3,7 +3,6 @@
 Vue.component('doing', {
   template: '#doing',
   replace: true,
-  props: ['d'],
 
   ready: function() {
     var isDoing = false;
@@ -49,38 +48,38 @@ Vue.component('doing', {
   computed: {
     height: {
       get: function() {
-        return this.d.time / this.$root.time * this.$root.height;
+        return this.time / this.$root.time * this.$root.height;
       },
 
       set: function(val) {
-        this.d.time = val * this.$root.time / this.$root.height;
+        this.time = val * this.$root.time / this.$root.height;
       }
     },
 
     top: {
       get: function() {
-        return (this.d.start - this.$root.start) / this.$root.time * this.$root.height;
+        return (this.start - this.$root.start) / this.$root.time * this.$root.height;
       },
 
       set: function(val) {
-        this.d.start = (val / this.$root.height * this.$root.time) + this.$root.start;
+        this.start = (val / this.$root.height * this.$root.time) + this.$root.start;
       }
     },
 
     backgroundHeight: function() {
-      return (this.$root.currentTime - this.d.start) / this.$root.time * this.$root.height;
+      return (this.$root.currentTime - this.start) / this.$root.time * this.$root.height;
     },
 
     isDoing: function() {
-      return this.d.start <= this.$root.currentTime && this.$root.currentTime < this.d.start + this.d.time;
+      return this.start <= this.$root.currentTime && this.$root.currentTime < this.start + this.time;
     },
 
     isDone: function() {
-      return this.d.start + this.d.time <= this.$root.currentTime;
+      return this.start + this.time <= this.$root.currentTime;
     },
 
     willDo: function() {
-      return this.$root.currentTime < this.d.start;
+      return this.$root.currentTime < this.start;
     }
   }
 });

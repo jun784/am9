@@ -9,7 +9,7 @@ class TimelineStore extends Store {
       resources: [
         {
           id: 1,
-          doing: [{
+          doings: [{
             id: 1,
             body: 'シャワーを浴びる',
             start: new Date(2015, 5, 28, 8, 0).getTime(),
@@ -49,7 +49,7 @@ class TimelineStore extends Store {
         },
         {
           id: 2,
-          doing: [{
+          doings: [{
             id: 4,
             body: 'シャワーを浴びる',
             start: new Date(2015, 5, 28, 14, 0).getTime(),
@@ -71,7 +71,7 @@ class TimelineStore extends Store {
         },
         {
           id: 3,
-          doing: [{
+          doings: [{
             id: 7,
             body: 'Vue の勉強',
             start: new Date(2015, 5, 28, 13, 0).getTime(),
@@ -123,7 +123,7 @@ class TimelineStore extends Store {
       return;
     }
 
-    resource.doing.push(doing);
+    resource.doings.push(doing);
 
     this.trigger('addDoing', { resourceId, doing });
   }
