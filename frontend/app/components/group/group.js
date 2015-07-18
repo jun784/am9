@@ -1,5 +1,6 @@
 import timeline from '../timeline/timeline';
 import add from '../add/add';
+import things from '../things/things';
 
 require('./group.scss');
 
@@ -10,6 +11,26 @@ module.exports = {
     this.$on('doing-added', (idx) => {
       this.$broadcast('doing-added', idx);
     });
+
+    this.things = [{
+      id: '1',
+      body: 'abc1',
+      start: new Date().getTime(),
+      time: 1000 * 60 * 55,
+      done: false
+    },{
+      id: '2',
+      body: 'abc2',
+      start: new Date().getTime(),
+      time: 1000 * 60 * 55,
+      done: false
+    },{
+      id: '3',
+      body: 'abc3',
+      start: new Date().getTime(),
+      time: 1000 * 60 * 55,
+      done: false
+    }];
 
     // dummy data
     this.resources = [
@@ -56,5 +77,5 @@ module.exports = {
     ];
   },
 
-  components: { timeline, add }
+  components: { timeline, add, things }
 };
