@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "engines": {
-     "node": "0.12.4"
+    "node": "0.12.4"
   },
   "scripts": {
     "start": "node app.js"
@@ -21,6 +21,7 @@
     "mysql": "^2.7.0",
     "request": "^2.58.0",
     "sequelize": "^3.2.0",
+    "sequelize-heroku": "^1.0.0",
     "serve-favicon": "~2.2.1"
   }
 }
