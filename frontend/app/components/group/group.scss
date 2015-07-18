@@ -20,3 +20,15 @@
   right: 30px;
   text-align: center;
 }
+
+.timeline-wrapper {
+  overflow: hidden;
+  position: absolute;
+  top: 36px;
+  left: 360px;
+  right: 36px;
+  bottom: 36px;
+  background: #FFF;
+  border-radius: 10px;
+  z-index: 1;
+}
