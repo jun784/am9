@@ -30,6 +30,14 @@
       <div v-route></div>
     </main>
 
+    <script type="text/template" id="thing">
+      <li class="thing">
+        <div class="knob" v-on="click: onClickMoveThing()" >
+          <input type="text" v-class="done: thing.done" v-model="thing.body" v-el="thingInput" v-on="keyup: stateCheck($event)">
+        </div>
+      </li>
+    </script>
+
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
       (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
