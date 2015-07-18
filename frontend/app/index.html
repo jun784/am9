@@ -33,15 +33,9 @@
         </div>
       </header>
 
-      <div class="timeline-wrapper">
-        <div id="timeline" v-ref="timeline"></div>
-        <div id="add">
-          <div id="add-frame">
-            <div id="up-icon"></div>
-          </div>
-          <div id="add-icon"></div>
-          <div id="add-textarea" contenteditable="true"></div>
-        </div>
+      <div id="app" class="timeline-wrapper">
+        <timeline resources="{{ resources }}"></timeline>
+        <add resource="{{ resources[0] }}"></add>
       </div>
     </div>
 
@@ -59,7 +53,6 @@
     <!-- bower:js -->
     <script src="/bower_components/jquery/dist/jquery.js"></script>
     <script src="/bower_components/jquery-ui/jquery-ui.min.js"></script>
-    <script src="/bower_components/vue/dist/vue.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 

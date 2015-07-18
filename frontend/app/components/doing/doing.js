@@ -50,38 +50,38 @@ module.exports = {
   computed: {
     height: {
       get: function() {
-        return this.time / this.$root.time * this.$root.height;
+        return this.time / this.$parent.$parent.time * this.$parent.$parent.height;
       },
 
       set: function(val) {
-        this.time = val * this.$root.time / this.$root.height;
+        this.time = val * this.$parent.$parent.time / this.$parent.$parent.height;
       }
     },
 
     top: {
       get: function() {
-        return (this.start - this.$root.start) / this.$root.time * this.$root.height;
+        return (this.start - this.$parent.$parent.start) / this.$parent.$parent.time * this.$parent.$parent.height;
       },
 
       set: function(val) {
-        this.start = (val / this.$root.height * this.$root.time) + this.$root.start;
+        this.start = (val / this.$parent.$parent.height * this.$parent.$parent.time) + this.$parent.$parent.start;
       }
     },
 
     backgroundHeight: function() {
-      return (this.$root.currentTime - this.start) / this.$root.time * this.$root.height;
+      return (this.$parent.$parent.currentTime - this.start) / this.$parent.$parent.time * this.$parent.$parent.height;
     },
 
     isDoing: function() {
-      return this.start <= this.$root.currentTime && this.$root.currentTime < this.start + this.time;
+      return this.start <= this.$parent.$parent.currentTime && this.$parent.$parent.currentTime < this.start + this.time;
     },
 
     isDone: function() {
-      return this.start + this.time <= this.$root.currentTime;
+      return this.start + this.time <= this.$parent.$parent.currentTime;
     },
 
     willDo: function() {
-      return this.$root.currentTime < this.start;
+      return this.$parent.$parent.currentTime < this.start;
     }
   }
 };

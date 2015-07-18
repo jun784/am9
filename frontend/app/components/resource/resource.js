@@ -1,8 +1,8 @@
 'use strict';
 
-require('./resource.scss');
+import Vue from 'vue';
 
-import stores from '../../scripts/models/stores';
+require('./resource.scss');
 
 module.exports = {
   template: require('./resource.html'),
@@ -13,17 +13,10 @@ module.exports = {
   },
 
   created: function() {
-    stores.timeline.on('addDoing', (data) => {
-      if (data.resourceId !== this.id) {
-        return;
-      }
-
-      this.doings.$add(data.doing);
-
-      setTimeout(() => {
-        var list = this.$.doing;
-        this.resolveConflict(list[list.length - 1]);
-      }, 100);
+    this.$on('doing-added', (idx) => {
+      Vue.nextTick(() => {
+        this.resolveConflict(this.$.doing[idx]);
+      });
     });
   },
 

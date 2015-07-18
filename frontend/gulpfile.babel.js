@@ -30,21 +30,7 @@ gulp.task('scripts', () => {
   return gulp.src(['app/components/**/*', 'app/scripts/*/**/*.js', 'app/scripts/main.js'])
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
-    .pipe(webpack({
-      output: {
-        filename: 'main.js'
-      },
-      resolve: {
-        extensions: ['', '.js']
-      },
-      module: {
-        loaders: [
-          {test: /\.html$/, loader: 'html-loader'},
-          {test: /\.scss$/, loader: 'style!css!sass?sourceMap'},
-          {test: /\.js$/, loader: 'babel-loader'}
-        ]
-      }
-    }))
+    .pipe(webpack(require('./webpack.conf.js')))
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest('.tmp/scripts'))
     .pipe(bs.stream());

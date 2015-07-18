@@ -4,24 +4,31 @@ require('./timeline.scss');
 
 module.exports = {
   template: require('./timeline.html'),
-  data: {
-    start: (function(now) {
+  props: {
+    resources: Array
+  },
+
+  components: {
+    resource: require('../resource/resource')
+  },
+
+  created: function() {
+    this.start = (function(now) {
       now.setHours(0);
       now.setMinutes(0);
       now.setSeconds(0);
       now.setMilliseconds(0);
       return now.getTime();
-    })(new Date()),
-    time: 1000 * 60 * 60 * 24,
-    step: 1000 * 60 * 15,
-    stepLength: 30,
-    currentTime: Date.now(),
+    })(new Date());
 
-    resources: null
-  },
+    this.time = 1000 * 60 * 60 * 24;
+    this.step = 1000 * 60 * 15;
+    this.stepLength = 30;
+    this.currentTime = Date.now();
 
-  components: {
-    resource: require('../resource/resource')
+    setInterval(() => {
+      this.currentTime = Date.now();
+    }, 60000);
   },
 
   ready: function() {
@@ -41,18 +48,6 @@ module.exports = {
   },
 
   methods: {
-    refresh: function(timeline) {
-      if (timeline.start) {
-        this.start = timeline.start;
-      }
-      if (timeline.time) {
-        this.time = timeline.time;
-      }
-      if (timeline.resources) {
-        this.resources = timeline.resources;
-      }
-    },
-
     updateCurrentTime: function(current) {
       this.currentTime = current;
     }
