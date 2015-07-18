@@ -1,14 +1,18 @@
-'use strict';
+import timeline from '../timeline/timeline';
+import add from '../add/add';
 
-import Vue from 'vue';
+require('./group.scss');
 
-import timeline from '../components/timeline/timeline';
-import add from '../components/add/add';
+module.exports = {
+  template: require('./group.html'),
 
-var app = new Vue({
-  el: '#app',
-  data: {
-    resources: [
+  created: function() {
+    this.$on('doing-added', (idx) => {
+      this.$broadcast('doing-added', idx);
+    });
+
+    // dummy data
+    this.resources = [
       {
         id: 1,
         doings: [{
@@ -49,14 +53,8 @@ var app = new Vue({
           done: false
         }]
       }
-    ]
-  },
-
-  created: function() {
-    this.$on('doing-added', (idx) => {
-      this.$broadcast('doing-added', idx);
-    });
+    ];
   },
 
   components: { timeline, add }
-});
+};

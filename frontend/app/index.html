@@ -26,18 +26,9 @@
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <div id="container">
-      <header id="header" class="header">
-        <div class="header-login-buttons">
-          <a href="#" class="button-facebook">Login with Facebook</a>
-        </div>
-      </header>
-
-      <div id="app" class="timeline-wrapper">
-        <timeline resources="{{ resources }}"></timeline>
-        <add resource="{{ resources[0] }}"></add>
-      </div>
-    </div>
+    <main id="app">
+      <div v-route></div>
+    </main>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>

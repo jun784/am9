@@ -12,7 +12,7 @@ import fs from 'fs-extra';
 const $ = gulpLoadPlugins();
 
 gulp.task('styles', () => {
-  return gulp.src('app/styles/**/*.scss')
+  return gulp.src('app/main.scss')
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
     .pipe($.sass.sync({
@@ -22,17 +22,17 @@ gulp.task('styles', () => {
     }).on('error', $.sass.logError))
     .pipe($.autoprefixer({browsers: ['last 1 version']}))
     .pipe($.sourcemaps.write())
-    .pipe(gulp.dest('.tmp/styles'))
+    .pipe(gulp.dest('.tmp'))
     .pipe(bs.stream());
 });
 
 gulp.task('scripts', () => {
-  return gulp.src(['app/components/**/*', 'app/scripts/*/**/*.js', 'app/scripts/main.js'])
+  return gulp.src(['app/main.js'])
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
     .pipe(webpack(require('./webpack.conf.js')))
     .pipe($.sourcemaps.write())
-    .pipe(gulp.dest('.tmp/scripts'))
+    .pipe(gulp.dest('.tmp'))
     .pipe(bs.stream());
 });
 
@@ -85,7 +85,7 @@ gulp.task('extras', () => {
 gulp.task('inject', ['styles', 'scripts'], () => {
   return gulp.src('app/*.html')
     .pipe($.inject(
-      gulp.src(['.tmp/scripts/main.js', '.tmp/styles/**/*.css'], { read: false }),
+      gulp.src(['.tmp/main.js', '.tmp/main.css'], { read: false }),
       { ignorePath: ['app', '.tmp'], addRootSlash: false }))
     .pipe(gulp.dest('.tmp'))
     .pipe(bs.stream({once: true}));
@@ -111,7 +111,7 @@ gulp.task('serve', ['inject', 'fonts'], () => {
   ]).on('change', bs.reload);
 
   gulp.watch('app/*.html', ['inject']);
-  gulp.watch(['app/styles/**/*.scss', 'app/components/**/*', 'app/scripts/**/*.js'], ['inject']);
+  gulp.watch(['app/components/**/*', 'app/main.scss', 'app/main.js'], ['inject']);
   gulp.watch('app/fonts/**/*', ['fonts']);
   gulp.watch('bower.json', ['wiredep', 'fonts']);
 });
@@ -145,11 +145,11 @@ gulp.task('serve:test', () => {
 
 // inject bower components
 gulp.task('wiredep', () => {
-  gulp.src('app/styles/*.scss')
+  gulp.src('app/main.scss')
     .pipe(wiredep({
       ignorePath: /^(\.\.\/)+/
     }))
-    .pipe(gulp.dest('app/styles'));
+    .pipe(gulp.dest('app'));
 
   gulp.src('app/*.html')
     .pipe(wiredep({
