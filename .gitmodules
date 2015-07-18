@@ -1,0 +1,3 @@
+[submodule "am9-client"]
+	path = frontend
+	url = https://github.com/mosi-mosi/am9-client.git
