@@ -1,9 +1,7 @@
 'use strict';
 
-import stores from '../models/stores';
-
-Vue.component('thing', {
-  template: '#thing',
+module.exports = {
+  template: require('./thing.html'),
   replace: true,
   props: ['thing'],
 
@@ -23,4 +21,4 @@ Vue.component('thing', {
 
     }
   }
-});
+};
