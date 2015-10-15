@@ -28,20 +28,15 @@ app.options('*', function (req, res) {
   res.send('OK')
 })
 
-var auth = require('./routes/auth')
-app.use('/auth', auth)
+var api = express.Router()
+api.use('/auth', require('./routes/auth'))
+api.use('/user', require('./routes/user'))
+api.use('/things', require('./routes/things'))
+api.use('/parties', require('./routes/parties'))
+api.use('/resources', require('./routes/resources'))
 
-var user = require('./routes/user')
-app.use('/user', user)
+app.use('/api/v1', api)
 
-var things = require('./routes/things')
-app.use('/things', things)
-
-var parties = require('./routes/parties')
-app.use('/parties', parties)
-
-var resources = require('./routes/resources')
-app.use('/resources', resources)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
