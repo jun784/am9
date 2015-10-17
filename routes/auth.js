@@ -64,8 +64,8 @@ router.post('/login', function (req, res) {
 var request = require('request')
 
 router.post('/facebook', function (req, res) {
-  var accessTokenUrl = 'https://graph.facebook.com/v2.3/oauth/access_token'
-  var graphApiUrl = 'https://graph.facebook.com/v2.3/me'
+  var accessTokenUrl = 'https://graph.facebook.com/v2.5/oauth/access_token'
+  var graphApiUrl = 'https://graph.facebook.com/v2.5/me?fields=id,name,email'
   var params = {
     code: req.body.code,
     client_id: req.body.clientId,
@@ -91,7 +91,7 @@ router.post('/facebook', function (req, res) {
             if (existingUser) {
               return res.status(409).send({ message: 'There is already a Facebook account that belongs to you' })
             }
-            var token = req.headers.authorization.split(' ')[1]
+            var token = req.headers.authorization
             var payload = jwt.decode(token, process.env.TOKEN_SECRET)
             Account.findById(payload.sub)
               .then(function (account) {
@@ -115,7 +115,7 @@ router.post('/facebook', function (req, res) {
             return res.send({ token: token })
           }
           Account.create({
-            username: profile.first_name + profile.last_name,
+            username: profile.name,
             email: profile.email,
             fbId: profile.id,
             fbToken: accessToken.access_token
