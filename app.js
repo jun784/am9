@@ -23,7 +23,7 @@ app.use(function (req, res, next) {
   next()
 })
 
-app.use(express.static(path.join(__dirname, '/public')))
+app.use(express.static(path.join(__dirname, '/frontend/dist')))
 app.options('*', function (req, res) {
   res.send('OK')
 })
@@ -38,7 +38,7 @@ api.use('/resources', require('./routes/resources'))
 app.use('/api/v1', api)
 
 // always send index.html for SPA using pushState
-app.use(require('./middlewares/spa-server')(path.join(__dirname, '/public/index.html')))
+app.use(require('./middlewares/spa-server')(path.join(__dirname, '/frontend/dist/index.html')))
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
