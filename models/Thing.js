@@ -2,6 +2,9 @@ module.exports = function (sequelize, DataTypes) {
   var Thing = sequelize.define('Thing', {
     body: {
       type: DataTypes.STRING
+    },
+    accountId: {
+      type: DataTypes.STRING
     }
   }, {
     classMethods: {
