@@ -33,8 +33,7 @@ module.exports = function (sequelize, DataTypes) {
     classMethods: {
       associate: function (models) {
         Account.belongsToMany(models.Party, {through: 'PartyAccount'})
-        Account.hasMany(models.Thing, {
-          foreignKey: 'AssignedTo',
+        Account.hasOne(models.Resource, {
           constraints: false
         })
       }
